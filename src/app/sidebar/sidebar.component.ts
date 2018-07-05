@@ -1,35 +1,43 @@
 import { Component, OnInit } from '@angular/core';
+import { SidebarService } from './sidebar.service';
 
 declare const $: any;
-declare interface RouteInfo {
-    path: string;
-    title: string;
-    icon: string;
-    class: string;
-}
-export const ROUTES: RouteInfo[] = [
-    { path: 'dashboard', title: 'Dashboard',  icon: 'pe-7s-graph', class: '' },
-    { path: 'user', title: 'User Profile',  icon:'pe-7s-user', class: '' },
-    { path: 'login', title: 'User login',  icon:'pe-7s-user', class: '' },
-    { path: 'signup', title: 'User Register',  icon:'pe-7s-user', class: '' },
-];
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html'
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent implements OnInit {
-  menuItems: any[];
+    menuItems: any[];
+    subMenu: any[];
+    flag_drop: number = 0;
+    flag: number = 0;
+    constructor(public _data: SidebarService) { }
 
-  constructor() { }
+    ngOnInit() {
+        this._data.getMenu().subscribe(
+            (data: any) => {
+                this.menuItems = data;
+            }
+        );
+    }
+    isMobileMenu() {
+        if ($(window).width() > 991) {
+            return false;
+        }
+        return true;
+    };
 
-  ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
-  }
-  isMobileMenu() {
-      if ($(window).width() > 991) {
-          return false;
-      }
-      return true;
-  };
+    onMenuClick(id) {
+            this._data.getSubMenu(id).subscribe(
+                (data: any) => {
+                    //alert("len = "+data.length);
+                    if (data.length != 0) {
+                        console.log("flag_drop = "+this.flag_drop);
+                        this.flag_drop = id;
+                        this.subMenu = data;
+                    }
+                }
+            );
+    }
 }

@@ -1,31 +1,37 @@
-<footer class="footer">
+<footer class="footer" style="position: fixed;
+left: 100;
+bottom: 0;
+right: -10;
+width: 100%;
+background-color: darkgoldenrod;
+text-align: center;">
     <div class="container-fluid">
         <nav class="pull-left">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="#" style="color: white !important;">
                         Home
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#" style="color: white !important;">
                         Company
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#" style="color: white !important;">
                         Portfolio
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#" style="color: white !important;">
                         Blog
                     </a>
                 </li>
             </ul>
         </nav>
-        <p class="copyright pull-right">
-            &copy; {{test | date: 'yyyy'}} <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+        <p class="copyright pull-right" style="padding-right:260px; color: white !important;">
+            &copy; {{test | date: 'yyyy'}} <a style="color: black !important;text-decoration:underline;" href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
         </p>
     </div>
 </footer>

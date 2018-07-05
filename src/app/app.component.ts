@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
+import { LocationStrategy, PlatformLocation, Location, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +9,32 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 })
 export class AppComponent implements OnInit {
     x:boolean=false;
-     constructor(public location: Location) {}
-
+    email:string='';
+     constructor(public _router:Router,public location: Location) {}
+    
+     
     ngOnInit(){
+this.email=localStorage.getItem('Email');
+console.log(this.email);
+this.x=false;
+console.log(this.x);
+if(this.email != "null")
+{
+  this.x = true;
+  this._router.navigate(['/Dashboard']);
+  console.log(this.x);
+}
+else
+{
+  this.x = false;
+}
+console.log(this.x);
     }
 
     isMap(path){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
+      let titlee = this.location.prepareExternalUrl(this.location.path());
       titlee = titlee.slice( 1 );
-      if(path == titlee){
+      if (path === titlee){
         return false;
       }
       else {

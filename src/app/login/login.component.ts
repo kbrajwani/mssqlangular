@@ -14,35 +14,36 @@ import { JsonPipe } from '@angular/common';
 export class LoginComponent implements OnInit {
 
   constructor(public _router:Router,public data:LoginService) { }
- email_id:string;
+ email:string;
  password:string;
- arr:any;
-
+ arr:string[][];
+token:string;
  str:string;
   ngOnInit() {
-    this.data.getUser().subscribe(
-      (x)=>{
-alert(x);
-alert(JSON.stringify(x));
-
-      },
-      function(error){alert("error");},			
-        function(){
-      }			
-
-    );
+    localStorage.setItem('Email',null);
+  }
+  signupuser(){
+    this._router.navigate(['/signup']);
   }
   checkuser(){
 
-    this.data.checkuser(new User_Class(this.email_id,this.password,'','')).subscribe(
-      (x:any[])=>{
-        this.arr=JSON.stringify(x);
-        this.arr=JSON.parse(this.arr);
-        alert(this.arr);
+    this.data.checkuser(new User_Class(this.email,'',this.password,'','')).subscribe(
+      (x:User_Class[])=>{
+       console.log(x);
         if (x.length==1) {
-          localStorage.setItem('Email',this.email_id);
-          console.log(this.email_id);
-        this._router.navigate(['/dashboard']);
+          this.data.token(this.email).subscribe(
+(x:User_Class[])=>{
+  console.log("x: "+x);
+this.token=x[0].user_token;
+localStorage.setItem('Token',this.token);
+
+},
+function(error){alert("error");},			
+        function(){
+      }		
+          );
+          localStorage.setItem('Email',this.email);
+          window.location.reload();
           
         }
         else {
